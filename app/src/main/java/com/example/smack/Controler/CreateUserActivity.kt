@@ -1,11 +1,15 @@
 package com.example.smack.Controler
 
+import android.content.Context
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import com.example.smack.R
 import com.example.smack.Services.AuthService
+import com.example.smack.Services.UserDataService
+import com.example.smack.Services.UserDataService.name
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
@@ -13,6 +17,7 @@ class CreateUserActivity : AppCompatActivity() {
 
     var userAvatar = "proileDefault"
     var avatarColor = "[0.5, 0.5, 0.5, 1]"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +55,26 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserClicked(view:  View) {
-        AuthService.registerUser(this, "cyprian.g55@gmail.com", "123456") {complete ->
-            if(complete) {
 
+        val userName = createUserNameText.text.toString()
+        val email = createEmailText.text.toString()
+        val password = createPasswordText.text.toString()
+
+        AuthService.registerUser(this, email, password) {registerSucces ->
+            if(registerSucces) {
+                AuthService.loginUser(this, email, password){loginSucces ->
+                    if(loginSucces){
+                        AuthService.createUser(this, userName, email, userAvatar, avatarColor) {createSuccess ->
+                            if(createSuccess){
+                                println(UserDataService.avatarName)
+                                println(UserDataService.avatarColor)
+                                println(UserDataService.name)
+                                finish()
+                            }
+                        }
+                    }
+
+                }
             }
 
         }

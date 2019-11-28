@@ -1,12 +1,14 @@
 package com.example.smack.Controler
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.example.smack.R
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity()  {
             super.onBackPressed()
         }
     }
+
+
 
     fun loginBtnNavClicked(view: View) {
         val loginIntent = Intent(this, LoginActivity::class.java)
